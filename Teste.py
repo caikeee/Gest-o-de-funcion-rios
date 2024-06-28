@@ -1,16 +1,15 @@
-from datetime import datetime 
-from decimal import Decimal
-from collections import defaultdict
-from decimal import Decimal
-from operator import attrgetter
+from datetime import datetime # para manipular datas
+from decimal import Decimal #manipula decimais de maneira precisa
+from collections import defaultdict #criação de dicionários com valores padrão.
+from operator import attrgetter #pega atributos de objetos de forma fácil.
 
 
 class Pessoa:
   def __init__(self, nome , data_nascimento):
     self.nome = nome
-    self.data_nascimento = datetime.strptime(data_nascimento, "%d/%m/%Y") 
+    self.data_nascimento = datetime.strptime(data_nascimento, "%d/%m/%Y") ## Converte  data_nascimento para um objeto datetime
  
-  def __str__(self):
+  def __str__(self): ## método que retorna uma representação em string do objeto
         return f'{self.nome} ({self.data_nascimento.strftime("%d/%m/%Y")})'
   
 
@@ -18,12 +17,13 @@ class Pessoa:
 class Funcionario(Pessoa):
     def __init__(self, nome, data_nascimento, salario, funcao):
         super().__init__(nome, data_nascimento)
-        self.salario = Decimal(salario)
+        self.salario = Decimal(salario)  # converte salario para um objeto Decimal
         self.funcao = funcao
         
     def __str__(self):
-        salario_formatado = f'{self.salario:,.2f}'.replace(",", "X").replace(".", ",").replace("X", ".")
-        return f'{self.nome}, {self.data_nascimento.strftime("%d/%m/%Y")}, {self.funcao}, {salario_formatado}'
+        salario_formatado = f'{self.salario:,.2f}'.replace(",", "X").replace(".", ",").replace("X", ".")# formata o salário com separadores de milhar e decimal
+        return f'{self.nome}, {self.data_nascimento.strftime("%d/%m/%Y")}, {self.funcao}, {salario_formatado}' # devolve os atributos como string
+
     
 
 
@@ -41,51 +41,51 @@ funcionarios = [
     Funcionario("Helena", "02/09/1996", "2799.93", "Gerente")
 ]
 
-# 3.2 – Remover o funcionário “João” da lista.
-funcionarios = [f for f in funcionarios if f.nome != "João"]
+# REMOVE JOÃO DA LISTA
+funcionarios = [f for f in funcionarios if f.nome != "João"] 
 
-# 3.3 – Imprimir todos os funcionários com todas suas informações.
+# IMPRIMI FUNCIONARIOS E SUAS INFORMAÇÕES
 print("Funcionários:")
 for f in funcionarios:
     print(f)
 
-# 3.4 – Aumentar salário em 10%
+# AUMENTANDO SALARIO
 for f in funcionarios:
     f.salario *= Decimal("1.10")
 
-# 3.5 – Agrupar por função
+# AGRUPANDO PELA FUNÇÃO
 funcionarios_por_funcao = defaultdict(list)
 for f in funcionarios:
     funcionarios_por_funcao[f.funcao].append(f)
 
-# 3.6 – Imprimir agrupados por função
+# IMPRIME FUNCIONARIOS AGRUPADOS NA FUNÇÃO
 print("\nFuncionários agrupados por função:")
 for funcao, funcs in funcionarios_por_funcao.items():
     print(funcao + ":")
     for f in funcs:
         print("  " + f.nome)
 
-# 3.8 – Imprimir funcionários que fazem aniversário no mês 10 e 12
+#IMPRIME FUNCIONARIOS QUE FAZEM ANIVERSARIO NOS MESES 10 E 12
 print("\nFuncionários que fazem aniversário em outubro e dezembro:")
 for f in funcionarios:
     if f.data_nascimento.month in [10, 12]:
         print(f.nome)
 
-# 3.9 – Imprimir o funcionário com a maior idade
+# IMPRIME FUNCIOANRIO MAIS VELHO
 mais_velho = min(funcionarios, key=attrgetter('data_nascimento'))
 idade_mais_velho = (datetime.now() - mais_velho.data_nascimento).days // 365
 print(f"\nFuncionário com a maior idade: {mais_velho.nome}, {idade_mais_velho} anos")
 
-# 3.10 – Imprimir a lista de funcionários por ordem alfabética
+# IMPRIME A LISTA DE FUNCIONARIOS POR ORDEM ALFABETICA
 print("\nFuncionários em ordem alfabética:")
 for f in sorted(funcionarios, key=attrgetter('nome')):
     print(f.nome)
 
-# 3.11 – Imprimir o total dos salários dos funcionários
+# IMPRIMIR O TOTAL DE SALARIOS POR FUNCIOINARIO
 total_salarios = sum(f.salario for f in funcionarios)
 print("\nTotal dos salários: " + f'{total_salarios:,.2f}'.replace(",", "X").replace(".", ",").replace("X", "."))
 
-# 3.12 – Imprimir quantos salários mínimos ganha cada funcionário
+# IMPRIMIR QUANTOS SALARIOS MINIMOS O FUNCIONARIO GANHA
 salario_minimo = Decimal("1212.00")
 print("\nSalários em múltiplos do salário mínimo:")
 for f in funcionarios:
