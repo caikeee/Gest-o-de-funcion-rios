@@ -1,9 +1,4 @@
-# Projeto de Gestão de Funcionários
+# Uso esse repositorio para os testes que faço e estudos de novas ferramentas
 
-Este projeto implementa uma solução em Python para a gestão de funcionários.
-
-## Como Executar
-
-1. Clone o repositório.
-2. Navegue até o diretório do projeto.
-3. Execute o arquivo `Teste.py`:
+Teste - é um sistema de gerenciamento de colaboradores
+Teste1 - sistema de cadastro de produtos com interface grafica usando TKinter.
